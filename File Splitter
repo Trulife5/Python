@@ -1,0 +1,17 @@
+def main():
+    bufferSize = 50000
+    infile = open('Penguins.jpg', 'rb')
+    filePrefix = 'Penguins'
+    buffer = infile.read(bufferSize)
+    
+    i=0
+    while len(buffer):
+        filePrefix = filePrefix + str(i)
+        outfile = open(filePrefix, 'wb')
+        outfile.write(buffer)
+        print('.', end='')
+        buffer = infile.read(bufferSize)
+        i = i + 1
+        filePrefix = "Penguins"
+            
+main()
