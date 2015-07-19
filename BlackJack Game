@@ -1,0 +1,148 @@
+import random
+import sys
+
+#global variable
+playerCards = []
+
+def playAgain(hitOrStay, total, dealerTotal):
+    anotherGame = input("{Play again? (y/n) ")
+    if anotherGame == 'y':
+        playerCards.clear()
+        dealerTotal = random.randint(15, 22)
+        hitOrStay = ''
+        hand1 = deal()
+        hand2 = deal()
+        total = hand1[1] + hand2[1]
+        playerCards.append(hand1[0])
+        playerCards.append(hand2[0])
+        
+        while hitOrStay != 'hit' and hitOrStay != 'stay':
+            print("You are dealt ", playerCards)
+            print("Your total is ", total)
+            hitOrStay = input("hit or stay? ")
+            hitOrStay = str(hitOrStay).lower()
+        game(hitOrStay, total, dealerTotal)
+    else:
+        sys.exit()
+
+def hit(total, dealerTotal):
+    hand =deal()
+    playerCards.append(hand[0])
+    if hand[0] == 'ace' and total >=10:
+        total += 1
+    else:
+        total += hand[1]
+    print("Your cards are: ", playerCards)
+    print("Your total is: ", total)
+    if total == 21 and dealerTotal != 21:
+        print("You got BlackJack!")
+        print("Dealer total is: ", dealerTotal)
+    elif total > 21:
+        print("You busted and Lost")
+        print("Dealer total is: ", dealerTotal)
+    elif total == dealerTotal and total < 21:
+        print("It's a push")
+        print("Dealer total is: ", dealerTotal)
+    else:
+        hitOrStay = input("hit or stay? ")
+        while hitOrStay != 'hit' and hitOrStay != 'stay':
+            print("You are dealt ", playerCards)
+            print("Your total is: ", total)
+            hitOrStay = input("hit or stay? ")
+            hitOrStay = str(hitOrStay).lower()
+        game(hitOrStay, total, dealerTotal)
+    return
+
+def stay(total, dealerTotal):
+    if total == 21 and dealerTotal != 21:
+        print("You got BlackJack!")
+        print("Dealer total is: ", dealerTotal)
+    elif total > dealerTotal and total < 21:
+        print("You won the game!")
+        print("Dealer total is: ", dealerTotal)
+    elif total < dealerTotal and dealerTotal > 21:
+        print("You won the game!")
+        print("Dealer total is: ", dealerTotal)
+    elif total == dealerTotal and total == 21:
+        print("It's a push")
+        print("Dealer total is: ", dealerTotal)
+    else:
+        print("You lost the game!")
+        print("Dealer total is: ", dealerTotal)
+    return    
+    
+def deal():
+    total = 0
+    cards = ''
+    cards = random.randint(1, 13)
+    
+    if cards == 1:
+        card = 'Ace'
+        total += 11
+    elif cards == 2:
+        cards = 'Two'
+        total +=2
+    elif cards == 3:
+        cards = 'Three'
+        total +=3
+    elif cards == 4:
+        cards = 'Four'
+        total +=4
+    elif cards == 5:
+        cards = 'Five'
+        total +=5
+    elif cards == 6:
+        cards = 'Six'
+        total +=6
+    elif cards == 7:
+        cards = 'Seven'
+        total +=7
+    elif cards == 8:
+        cards = 'Eight'
+        total +=8
+    elif cards == 9:
+        cards = 'Nine'
+        total +=9
+    elif cards == 10:
+        cards = 'Ten'
+        total +=10
+    elif cards == 11:
+        cards = 'Jack'
+        total +=10
+    elif cards == 12:
+        cards = 'Queen'
+        total +=10
+    elif cards == 13:
+        cards = 'King'
+        total +=10
+    else:
+        pass
+    return cards, total
+
+def game(hitOrStay, total, dealerTotal):
+    if hitOrStay == 'hit':
+        hit(total, dealerTotal)
+    else:
+        stay(total, dealerTotal)
+        
+    playAgain(hitOrStay, total, dealerTotal)
+
+def main():
+    print("Welcome to BlackJack")
+    dealerTotal = random.randint(15, 22)
+    hitOrStay = ''
+    hand1 = deal()
+    hand2 = deal()
+    total = hand1[1] + hand2[1]
+    playerCards.append(hand1[0])
+    playerCards.append(hand2[0])
+    
+    while hitOrStay != 'hit' and hitOrStay != 'stay':
+        print("you are dealt your cards ", playerCards)
+        print("Your total is: ", total)
+        hitOrStay = input('hit or stay? ')
+        hitOrStay = str(hitOrStay).lower()
+    game(hitOrStay, total, dealerTotal)
+    
+    
+main()
