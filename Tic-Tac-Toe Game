@@ -1,0 +1,84 @@
+import random
+
+#the game board
+gBoard = [0,1,2,
+          3,4,5,
+          6,7,8]
+
+def showBoard():
+    print("", gBoard[0], "|", gBoard[1], "|", gBoard[2])
+    print("----------")
+    print("", gBoard[3], "|", gBoard[4], "|", gBoard[5])
+    print("----------")
+    print("", gBoard[6], "|", gBoard[7], "|", gBoard[8])
+    print()
+    
+#check for winning line  
+def checkLine(char, s1, s2, s3):
+    if (gBoard[s1] == char and gBoard[s2] == char and gBoard[s3] == char):
+        return True
+    
+#check all possibilities
+def checkAll(char):
+    #horizontal lines
+    if checkLine(char, 0, 1, 2): return True
+    if checkLine(char, 3, 4, 5): return True
+    if checkLine(char, 6, 7, 8): return True
+    
+    #vertical lines
+    if checkLine(char, 0, 3, 6): return True
+    if checkLine(char, 1, 4, 7): return True
+    if checkLine(char, 2, 5, 8): return True
+    
+    #diagonal lines
+    if checkLine(char, 0, 4, 8): return True
+    if checkLine(char, 2, 4, 6): return True
+    
+def main():    
+    showBoard()
+    msg = "select a spot: "
+    playersTurn = True
+    gameOver = False
+    
+    while (not gameOver):
+        
+        while (not playersTurn):
+                
+            npc = random.randint(0, 8)
+            
+            #if the spot hasn't already been taken
+            if (gBoard[int(npc)] !='x' and gBoard[int(npc) != 'o']):
+                
+                #place an o on the spot
+                gBoard[int(npc)] = 'o'
+                print("npc picks spot " + str(npc))
+                showBoard()
+                
+                if checkAll('o') == True:
+                    print("Computer wins!")
+                    gameOver = True
+                else:
+                    playersTurn = True
+            
+            #computer has already picked that spot
+            else:
+                print("npc picks wrong spot")
+        
+        while (playersTurn):
+            #ask player to pick a spot
+            uin = input(msg)
+            
+            if (gBoard[int(uin)] != 'x' and gBoard[int(uin)] != 'o'):
+                
+                gBoard[int(uin)] = 'x'
+                showBoard()
+                
+                if checkAll('x') == True:
+                    print("Player wins")
+                    gameOver = True
+                    break
+                else:
+                    playersTurn = False
+            else:
+                    print("spot is already taken")
+main()          
