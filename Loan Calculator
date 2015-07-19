@@ -1,0 +1,18 @@
+import math
+
+def main():
+    loanAmount = input("Enter loan amount: ")
+    interest = input("Enter interest rate such as 4.5: ")
+    months = input("Enter term in months: ")
+    
+    loanAmount = float(loanAmount)
+    interest = float(interest) / 100 / 12
+    months = int(months)
+    
+    payment = round((interest*loanAmount) / (1-math.pow((1+interest),  -months)), 2)
+    
+    print("your payment is ${} per month".format(payment))
+    
+    
+    
+main()
